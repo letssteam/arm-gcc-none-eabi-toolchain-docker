@@ -14,7 +14,7 @@ on:
   pull_request:
 
 env:
-  IMAGE_NAME: arm-gcc-none
+  IMAGE_NAME: arm-gcc-none-eabi
 
 jobs:
   # Run tests.
