@@ -1,7 +1,7 @@
 FROM ubuntu:rolling
 
 # Install any needed packages specified in requirements.txt
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections\
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update && \
     apt-get upgrade -y -q && \
     apt-get install -y -q \
