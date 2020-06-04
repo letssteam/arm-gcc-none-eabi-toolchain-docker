@@ -1,9 +1,10 @@
 FROM ubuntu:rolling
 
 # Install any needed packages specified in requirements.txt
-RUN apt-get update && \
-    apt-get upgrade -y && \
-    apt-get install -y \
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections\
+    apt-get update && \
+    apt-get upgrade -y -q && \
+    apt-get install -y -q \
       build-essential \
       make \
       cmake \
