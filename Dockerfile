@@ -13,5 +13,6 @@ RUN apt-get update && \
       libstdc++-arm-none-eabi-newlib \
       libnewlib-arm-none-eabi \
       ca-certificates \
-      wget && \
+      wget \
+      curl && \
     apt-get clean
