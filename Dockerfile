@@ -25,3 +25,7 @@ RUN cd /usr/bin \
 	&& ln -s pydoc3 pydoc \
 	&& ln -s python3 python \
 	&& ln -s python3-config python-config
+
+RUN useradd -rm -d /home/buid -s /bin/bash -g root -G sudo -u 1001 build
+USER build
+WORKDIR /home/build
