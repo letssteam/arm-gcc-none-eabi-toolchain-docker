@@ -27,5 +27,7 @@ RUN cd /usr/bin \
 	&& ln -s python3-config python-config
 
 RUN useradd -rm -d /home/buid -s /bin/bash -g root -G sudo -u 1001 build
+RUN chown -R build:root /home/buid
+
 USER build
 WORKDIR /home/build
