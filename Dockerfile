@@ -26,8 +26,8 @@ RUN cd /usr/bin \
 	&& ln -s python3 python \
 	&& ln -s python3-config python-config
 
-RUN useradd -rm -d /src -s /bin/bash -g root -G sudo -u 1001 build
+RUN useradd -rm -d /src -s /bin/bash -g root -G sudo -u 1000 build
 RUN chown -R build:root /src
-
+RUN chmod -R g+rw /src
 USER build
 WORKDIR /src
