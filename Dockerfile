@@ -9,6 +9,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
       make \
       cmake \
       git \
+      python3 \
       bzip2 \
       gcc-arm-none-eabi \
       libstdc++-arm-none-eabi-newlib \
@@ -17,3 +18,10 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
       wget \
       curl && \
     apt-get clean
+
+# make some useful symlinks that are expected to exist
+RUN cd /usr/bin \
+	&& ln -s idle3 idle \
+	&& ln -s pydoc3 pydoc \
+	&& ln -s python3 python \
+	&& ln -s python3-config python-config
