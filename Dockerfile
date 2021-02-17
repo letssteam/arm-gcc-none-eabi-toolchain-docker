@@ -8,6 +8,8 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
       build-essential \
       make \
       cmake \
+      clang-tidy \
+      clang-format \
       git \
       python3 \
       bzip2 \
