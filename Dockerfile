@@ -1,22 +1,20 @@
-FROM ubuntu:rolling
+# [Choice] Debian / Ubuntu version: debian-10, debian-9, ubuntu-20.04, ubuntu-18.04
+ARG VARIANT=ubuntu-20.04
+FROM mcr.microsoft.com/vscode/devcontainers/cpp:0-${VARIANT}
 
 # Install any needed packages specified in requirements.txt
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
     apt-get update && \
     apt-get upgrade -y -q && \
     apt-get install -y -q \
-      build-essential \
-      make \
-      cmake \
       clang-tidy \
       clang-format \
-      git \
-      python3 \
-      bzip2 \
-      ca-certificates \
-      wget \
-      curl && \
-    apt-get clean
+      openocd \
+      ncurses-dev \
+      libudev-dev \
+      python3 && \
+    apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
+    
 # Install the last GCC from ARM
 ENV ARM_GCC_VERSION 10-2020-q4-major
 ENV ARM_GCC_PATH 10-2020q4
@@ -38,10 +36,10 @@ ENV PATH="${ARM_GCC_INSTALL_FOLDER}/bin:${PATH}"
 
 # make some useful symlinks that are expected to exist
 RUN cd /usr/bin                                                                          && \
-	  ln -s idle3 idle                                                                     && \
-	  ln -s pydoc3 pydoc                                                                   && \
-	  ln -s python3 python                                                                 && \
-	  ln -s python3-config python-config                                                   && \
+    ln -s idle3 idle                                                                     && \
+    ln -s pydoc3 pydoc                                                                   && \
+    ln -s python3 python                                                                 && \
+    ln -s python3-config python-config                                                   && \
     ln -s /arm_gcc/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-addr2line        && \            
     ln -s /arm_gcc/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-ar               && \            
     ln -s /arm_gcc/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-as               && \            
@@ -75,8 +73,7 @@ RUN cd /usr/bin                                                                 
     ln -s /arm_gcc/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-strings          && \
     ln -s /arm_gcc/gcc-arm-none-eabi-10-2020-q4-major/bin/arm-none-eabi-strip
 
-RUN useradd -rm -d /src -s /bin/bash -g root -G sudo -u 1000 build
-RUN chown -R build:root /src
-RUN chmod -R g+rw /src
-USER build
-WORKDIR /src
+# This is required to get arm-none-eabi-gdb working
+RUN  cd /usr/lib/x86_64-linux-gnu && \
+    ln -s libncurses.so.6.2 libncurses.so.5 && \
+    ln -s libtinfo.so.6.2 libtinfo.so.5
