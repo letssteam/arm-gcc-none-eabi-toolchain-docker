@@ -1,34 +1,5 @@
-# See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.195.0/containers/cpp/.devcontainer/base.Dockerfile
-# [Choice] Debian / Ubuntu version (use Debian 11/9, Ubuntu 18.04/21.04 on local arm64/Apple Silicon): debian-11, debian-10, debian-9, ubuntu-21.04, ubuntu-20.04, ubuntu-18.04
 ARG VARIANT=ubuntu-22.04
 FROM mcr.microsoft.com/vscode/devcontainers/cpp:0-${VARIANT}
-
-# Install any needed packages specified in requirements.txt
-RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections && \
-    apt-get update && \
-    apt-get upgrade -y -q && \
-    apt-get install -y -q \
-    clang-tidy \
-    clang-format \
-    openocd \
-    ncurses-dev \
-    libudev-dev \
-    ninja-build \
-    python3 \
-    python3-pip \
-    python3-setuptools \
-    python3-wheel && \
-    update-alternatives --install /usr/bin/python python /usr/bin/python3 1 && \
-    update-alternatives --install /usr/bin/python-config python-config /usr/bin/python3-config 1 && \
-    update-alternatives --install /usr/bin/pydoc pydoc /usr/bin/pydoc3 1 && \
-    apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
-
-# Install Github CLI
-RUN curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg && \
-    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null && \
-    sudo apt update && \
-    sudo apt install gh && \
-    apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Install the last GCC from ARM
 ENV ARM_TOOLCHAIN_VERSION 13.3.rel1
