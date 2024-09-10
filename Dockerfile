@@ -61,4 +61,5 @@ RUN cd /usr/bin                                                              && 
 # This is required to get arm-none-eabi-gdb working
 RUN  cd /usr/lib/x86_64-linux-gnu && \
     ln -s libncurses.so.6 libncurses.so.5 && \
+    ln -s libncursesw.so.6 libncursesw.so.5 && \
     ln -s libtinfo.so.6 libtinfo.so.5
